@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import os
 
+# ----------------- APP SETUP -----------------
 app = Flask(__name__)
 app.secret_key = "5106cd20b7aed78fefe6234ae818fa1f2a325ce48118738b9932c78b3cc17"
 
@@ -13,6 +14,7 @@ def get_db_connection():
     return sqlite3.connect(DB_NAME, timeout=10)
 
 def init_db():
+    """Initialize the database and tables"""
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -67,10 +69,9 @@ def update_user_details(user_id, fullname, email, password=None):
             )
         conn.commit()
 
-# ---- DB init (Render-safe) ----
-@app.before_first_request
-def setup_database():
-    init_db()
+# ----------------- INITIALIZE DB -----------------
+# This ensures database and tables exist before handling any requests
+init_db()
 
 # ----------------- ROUTES -----------------
 @app.route('/')
@@ -187,6 +188,6 @@ def logout():
     session.pop('user_email', None)
     return redirect(url_for('login'))
 
-# ----------------- RUN -----------------
+# ----------------- RUN LOCAL -----------------
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
