@@ -4,25 +4,30 @@ import os
 
 app = Flask(__name__)
 app.secret_key = "5106cd20b7aed78fefe6234ae818fa1f2a325ce48118738b9932c78b3cc17"
-DB_NAME = os.path.join(os.path.dirname(__file__), "database.db")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.path.join(BASE_DIR, "database.db")
 
 # ----------------- DATABASE HELPERS -----------------
+def get_db_connection():
+    return sqlite3.connect(DB_NAME, timeout=10)
+
 def init_db():
-    with sqlite3.connect(DB_NAME, timeout=10) as conn:
+    with get_db_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute('''
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 fullname TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL
             )
-        ''')
+        """)
         conn.commit()
 
 def add_user(fullname, email, password):
     try:
-        with sqlite3.connect(DB_NAME, timeout=10) as conn:
+        with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
                 "INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)",
@@ -33,19 +38,22 @@ def add_user(fullname, email, password):
         raise ValueError("Email already registered!")
 
 def check_user(email, password):
-    with sqlite3.connect(DB_NAME, timeout=10) as conn:
+    with get_db_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
+        cursor.execute(
+            "SELECT * FROM users WHERE email=? AND password=?",
+            (email, password)
+        )
         return cursor.fetchone()
 
 def get_user_by_email(email):
-    with sqlite3.connect(DB_NAME, timeout=10) as conn:
+    with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE email=?", (email,))
         return cursor.fetchone()
 
 def update_user_details(user_id, fullname, email, password=None):
-    with sqlite3.connect(DB_NAME, timeout=10) as conn:
+    with get_db_connection() as conn:
         cursor = conn.cursor()
         if password:
             cursor.execute(
@@ -59,8 +67,10 @@ def update_user_details(user_id, fullname, email, password=None):
             )
         conn.commit()
 
-# Initialize database
-init_db()
+# ---- DB init (Render-safe) ----
+@app.before_first_request
+def setup_database():
+    init_db()
 
 # ----------------- ROUTES -----------------
 @app.route('/')
@@ -85,6 +95,7 @@ def signup():
                 return redirect(url_for('homepage'))
             except ValueError:
                 message = "Email already registered!"
+
     return render_template('signup.html', message=message)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -94,27 +105,39 @@ def login():
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
         user = check_user(email, password)
+
         if user:
             session['user_email'] = email
             return redirect(url_for('homepage'))
         else:
             message = "Invalid credentials. Try again."
+
     return render_template('login.html', message=message)
 
 @app.route('/homepage')
 def homepage():
     if 'user_email' not in session:
         return redirect(url_for('login'))
+
     user = get_user_by_email(session['user_email'])
-    user_dict = {"id": user[0], "fullname": user[1], "email": user[2]}
+    user_dict = {
+        "id": user[0],
+        "fullname": user[1],
+        "email": user[2]
+    }
     return render_template('homepage.html', user=user_dict)
 
 @app.route('/dashboarduser', methods=['GET', 'POST'])
 def dashboarduser():
     if 'user_email' not in session:
         return redirect(url_for('login'))
+
     user = get_user_by_email(session['user_email'])
-    user_dict = {"id": user[0], "fullname": user[1], "email": user[2]}
+    user_dict = {
+        "id": user[0],
+        "fullname": user[1],
+        "email": user[2]
+    }
     message = ""
 
     if request.method == 'POST':
@@ -127,7 +150,7 @@ def dashboarduser():
             if current_password != user[3]:
                 message = "Current password is incorrect!"
             else:
-                update_user_details(user[0], fullname, email, password=new_password)
+                update_user_details(user[0], fullname, email, new_password)
                 session['user_email'] = email
                 message = "Details updated successfully!"
                 user_dict.update({"fullname": fullname, "email": email})
@@ -137,7 +160,11 @@ def dashboarduser():
             message = "Details updated successfully!"
             user_dict.update({"fullname": fullname, "email": email})
 
-    return render_template('dashboarduser.html', user=user_dict, message=message)
+    return render_template(
+        'dashboarduser.html',
+        user=user_dict,
+        message=message
+    )
 
 @app.route('/books')
 def books_page():
@@ -160,7 +187,6 @@ def logout():
     session.pop('user_email', None)
     return redirect(url_for('login'))
 
-# ----------------- RUN APP -----------------
+# ----------------- RUN -----------------
 if __name__ == '__main__':
-    # local ke liye debug
-    app.run(debug=True)
+    app.run()

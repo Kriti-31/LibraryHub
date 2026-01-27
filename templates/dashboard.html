@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIBRARY HUB Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>LIBRARY HUB</h2>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Books</a></li>
+            <li><a href="#">Members</a></li>
+            <li><a href="#">Transactions</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Dashboard</h1>
+            <div class="user-info">
+                <p>Welcome, Admin!</p>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="card">
+                <h3>Total Books</h3>
+                <p>1200</p>
+            </div>
+            <div class="card">
+                <h3>Issued Books</h3>
+                <p>300</p>
+            </div>
+            <div class="card">
+                <h3>Members</h3>
+                <p>150</p>
+            </div>
+            <div class="card">
+                <h3>Overdue Books</h3>
+                <p>25</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 LIBRARY HUB</p>
+        </footer>
+    </div>
+
+</body>
+</html>

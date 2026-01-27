@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+
+    <!-- Local CSS (Flask path) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <div class="container mx-auto px-6 py-10">
+        <h1 class="text-4xl font-bold mb-6 text-center text-blue-700">About Us</h1>
+        
+        <div class="bg-white bg-opacity-80 shadow-lg rounded-lg p-8 max-w-4xl mx-auto">
+            <p class="text-lg leading-relaxed">
+                Digital Library Management Systems are crucial in today's world. They streamline library operations, enhance efficiency, 
+                and improve user experience. By automating tasks like cataloging, circulation, and reservations, these systems save time 
+                and resources for library staff. Furthermore, they provide convenient access to library resources for patrons through 
+                online catalogs, mobile apps, and remote access services.
+            </p>
+
+            <p class="mt-4 text-lg leading-relaxed">
+                Digital platforms also facilitate data-driven decision-making, allowing libraries to track usage patterns, analyze trends, 
+                and better understand their community's needs. Overall, digital library management systems play a vital role in modernizing 
+                libraries and ensuring their continued success in the digital age.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-6 mb-2">Enhanced Accessibility:</h2>
+            <ul class="list-disc list-inside text-left text-lg">
+                <li><strong>24/7 Availability:</strong> Patrons can access library resources anytime, anywhere.</li>
+                <li><strong>Remote Access:</strong> Enables users to explore online catalogs, ebooks, and other resources remotely.</li>
+                <li><strong>Accessibility for People with Disabilities:</strong> Includes features like text-to-speech and screen readers.</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold mt-6 mb-2">Improved Resource Management:</h2>
+            <ul class="list-disc list-inside text-left text-lg">
+                <li><strong>Accurate Inventory:</strong> Maintains real-time records of library materials.</li>
+                <li><strong>Efficient Acquisitions:</strong> Streamlines the process of acquiring and processing new materials.</li>
+                <li><strong>Space Optimization:</strong> Helps libraries make better use of available space.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>
+            Developed by: <strong>Kriti Purwar, Gauri Singh, Anshika Srivastava</strong><br>
+            Built with: HTML, CSS, JavaScript, Tailwind CSS, and Flask
+        </p>
+    </footer>
+
+</body>
+</html>

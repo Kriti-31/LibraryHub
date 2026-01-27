@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library Search by Genre</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/books.css') }}">
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    select, input, button { padding: 5px; margin-right: 10px; }
+    #searchResults { margin-top: 20px; }
+    .book { padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; cursor: pointer; }
+    .book:hover { background-color: #f0f0f0; }
+</style>
+</head>
+<body>
+<h1>Explore Books by Genre</h1>
+
+<!-- Search input -->
+<input type="text" id="searchBox" placeholder="Enter book name (optional)">
+
+<!-- Genre Dropdown -->
+<select id="genreSelect" onchange="searchBook()">
+    <option value="">Select Genre</option>
+    <option value="fiction">Fiction</option>
+    <option value="romance">Romance</option>
+    <option value="thriller">Thriller</option>
+    <option value="horror">Horror</option>
+    <option value="science_fiction">Science Fiction</option>
+    <option value="history">History</option>
+    <option value="fantasy">Fantasy</option>
+</select>
+
+<!-- Language Dropdown -->
+<select id="languageSelect">
+    <option value="">All Languages</option>
+    <option value="eng">English</option>
+    <option value="hin">Hindi</option>
+</select>
+
+<button onclick="searchBook()">Search</button>
+
+<div id="searchResults"></div>
+
+<script>
+async function searchBook() {
+    const query = document.getElementById('searchBox').value.trim();
+    const genre = document.getElementById('genreSelect').value;
+    const language = document.getElementById('languageSelect').value;
+    const resultsDiv = document.getElementById('searchResults');
+    resultsDiv.innerHTML = '';
+
+    if (!query && !genre) {
+        resultsDiv.innerHTML = '<p>Please enter a title or select a genre.</p>';
+        return;
+    }
+
+    resultsDiv.innerHTML = '<p>Searching...</p>';
+
+    try {
+        let url = 'https://openlibrary.org/search.json?';
+        if (query) url += `title=${encodeURIComponent(query)}&`;
+        if (genre) url += `subject=${encodeURIComponent(genre)}&`;
+        if (language) url += `language=${encodeURIComponent(language)}&`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!data.docs || data.docs.length === 0) {
+            resultsDiv.innerHTML = '<p>No books found. Try another query.</p>';
+            return;
+        }
+
+        resultsDiv.innerHTML = '';
+        data.docs.slice(0, 10).forEach(book => {
+            const bookElement = document.createElement('div');
+            bookElement.className = 'book';
+            bookElement.innerHTML = `
+                <h3>${book.title}</h3>
+                <p>Author: ${book.author_name ? book.author_name.join(', ') : 'Unknown'}</p>
+                <p>First Published: ${book.first_publish_year || 'N/A'}</p>
+                <p>Genre: ${book.subject ? book.subject[0] : 'N/A'}</p>
+            `;
+            bookElement.onclick = () => {
+                window.open(`https://openlibrary.org${book.key}`, '_blank');
+            };
+            resultsDiv.appendChild(bookElement);
+        });
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        resultsDiv.innerHTML = '<p>Error fetching data. Please try again later.</p>';
+    }
+}
+</script>
+
+</body>
+</html>

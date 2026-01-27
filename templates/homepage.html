@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOMEPAGE - Home</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('homepage') }}">Home</a></li>
+            <li><a href="{{ url_for('books_page') }}">Catalog</a></li>
+            <li><a href="{{ url_for('dashboarduser') }}">My Account</a></li>
+            <li><a href="{{ url_for('get_in_touch_page') }}">Get In Touch</a></li>
+            <li><a href="{{ url_for('contactus_page') }}">Contact Us</a></li>
+            <li><a href="{{ url_for('about_page') }}">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1>Welcome to the LIBRARY HUB</h1>
+            <p>Your one-stop solution for managing books, borrowing, and library services.</p>
+        </section>
+
+        <!-- Feature Boxes -->
+        <div class="feature-boxes">
+
+            <div class="feature-box">
+                <h2>Search Books</h2>
+                <p>Find books by title, author, or ISBN number. Quickly search our extensive catalog.</p>
+                <!-- Flask route -->
+                <a href="{{ url_for('books_page') }}">Search Now</a>
+            </div>
+
+            <div class="feature-box">
+                <h2>Browse Categories</h2>
+                <p>Explore books by category: Fiction, Science, History, Technology, and more.</p>
+                <!-- Placeholder link (can add Flask route later) -->
+                <a href="#">Browse Categories</a>
+            </div>
+
+            <div class="feature-box">
+                <h2>Manage Account</h2>
+                <p>Access your borrowed books, request renewals, and update your profile information.</p>
+                <!-- Flask route to Dashboard -->
+                <a href="{{ url_for('dashboarduser') }}">Manage Account</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 LIBRARY HUB. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

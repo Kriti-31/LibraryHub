@@ -1,0 +1,145 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    /* Full height for the viewport */
+    display: flex;
+    justify-content: center;
+    /* Horizontally center */
+    align-items: center;
+    /* Vertically center */
+    animation: backgroundChange 9s infinite;
+    /* Animate background colors */
+}
+
+@keyframes backgroundChange {
+    0% {
+        background: #a8e8ff;
+        /* Light blue */
+    }
+
+    33% {
+        background: #ffcccb;
+        /* Light pink */
+    }
+
+    66% {
+        background: #d4edda;
+        /* Light green */
+    }
+
+    100% {
+        background: #a8e8ff;
+        /* Back to light blue */
+    }
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    /* Enhanced box shadow */
+    transition: background-color 0.3s ease-in-out;
+    /* Smooth transition for background color */
+}
+
+.container:hover {
+    background-color: #f8f9fa;
+    /* Subtle background color change on hover */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Slight inner shadow for inputs */
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    /* Box shadow for the button */
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    /* Smooth transitions */
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    /* Subtle lift effect on hover */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    color: white;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    /* Box shadow for delete button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Smooth transitions */
+}
+
+.delete-button:hover {
+    background-color: darkred;
+    transform: translateY(-2px);
+    /* Subtle lift effect on hover */
+}
+
+.fine-message {
+    font-weight: bold;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}

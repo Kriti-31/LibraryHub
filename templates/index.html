@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDEX</title>
+    <!-- Use Flask's url_for to link static CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>LIBRARY HUB</h1>
+
+        <!-- Add action and method if you want to submit to Flask route -->
+<form id="book-form" action="{{ url_for('add_book') }}" method="POST">
+            <label for="title">Book Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter book title" required>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" placeholder="Enter author name" required>
+
+            <label for="isbn">ISBN (International Standard Book Number):</label>
+            <input type="text" id="isbn" name="isbn" placeholder="Enter ISBN number" required>
+
+            <label for="issue-date">Issue Date:</label>
+            <input type="date" id="issue-date" name="issue_date" required>
+
+            <label for="return-date">Return Date:</label>
+            <input type="date" id="return-date" name="return_date" required>
+
+            <p id="fine-message" class="fine-message"></p> <!-- Fine message section -->
+
+            <button type="submit" id="book">Add Book</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Issue Date</th>
+                    <th>Return Date</th>
+                    <th>Fine</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="book-list">
+                <!-- You can also render books from Flask here with Jinja -->
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.issue_date }}</td>
+                    <td>{{ book.return_date }}</td>
+                    <td>{{ book.fine }}</td>
+                    <td><a href="{{ url_for('delete_book', isbn=book.isbn) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Use Flask's url_for to link JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

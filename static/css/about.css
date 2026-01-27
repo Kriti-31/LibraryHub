@@ -1,0 +1,44 @@
+/* About Page CSS - Flask Ready */
+
+body {
+    font-family: sans-serif;
+    color: #333;
+    background-color: #f7f7f7;
+    background-image: url("{{ url_for('static', filename='images/contactus.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.image-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.image-container img {
+    max-width: 50%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.transparent-box {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #333;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #44385f;
+    color: #fff;
+    padding: 3rem 0;
+    text-align: center;
+}

@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('../images/contactus.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+h3 {
+  color: #333;
+  font-weight: normal;
+}
+
+.contact-info {
+  line-height: 1.8;
+}
+
+p {
+  margin-left: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+button {
+  background-color: burlywood;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: rgb(169, 114, 42);
+}
